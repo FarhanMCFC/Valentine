@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For You 🌸</title>
+<title>For Srishti 🌸</title>
 
 <style>
 body {
@@ -23,7 +23,6 @@ body {
   text-align: center;
   box-shadow: 0 15px 40px rgba(0,0,0,0.15);
   max-width: 380px;
-  position: relative;
 }
 
 h1 {
@@ -33,12 +32,13 @@ h1 {
 
 p {
   color: #7a4a5c;
+  font-size: 18px;
 }
 
 img {
-  width: 240px;
+  width: 260px;
   border-radius: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 button {
@@ -47,7 +47,6 @@ button {
   border-radius: 30px;
   border: none;
   cursor: pointer;
-  transition: transform 0.15s ease;
 }
 
 #yes {
@@ -59,12 +58,14 @@ button {
   background-color: #f1c0c0;
   color: #6d3c47;
   position: fixed;
+  left: 20px;
+  top: 20px;
 }
 
 #musicOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(255,250,246,0.95);
+  background: rgba(255,250,246,0.96);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -78,18 +79,17 @@ button {
 
 <body>
 
-<!-- 🎵 MUSIC OVERLAY -->
-<div id="musicOverlay">Tap to start music 🎶</div>
+<!-- 🎵 TAP TO START MUSIC -->
+<div id="musicOverlay">tap to start music 🎶</div>
 
 <audio id="music" loop>
-  <source src="https://dl.dropboxusercontent.com/scl/fi/9tr9tf5ey8g0z4kpzzp4v/Dandelions.mp3?rlkey=xyz&raw=1" type="audio/mpeg">
+  <source src="dandelions.mp3" type="audio/mpeg">
 </audio>
 
-<div class="card">
-  <!-- ZOOTOPIA (TENOR) -->
-  <img src="https://media.tenor.com/uQK6wJgRzKkAAAAC/zootopia-nick-wilde.gif">
+<div class="card" id="card">
+  <img src="proposal.gif" alt="proposal">
 
-  <h1>Will you be my Valentine? 🌸</h1>
+  <h1>will you be my valentine, srishti?</h1>
   <p>(asking very softly)</p>
 
   <button id="yes" onclick="yesClicked()">Yes 🤍</button>
@@ -102,32 +102,31 @@ const noBtn = document.getElementById("no");
 const music = document.getElementById("music");
 const overlay = document.getElementById("musicOverlay");
 
-// 🎵 music start
+// start music after user interaction
 overlay.onclick = () => {
   music.play();
   overlay.style.display = "none";
 };
 
-// 🐭 evade mouse but stay on screen
-document.addEventListener("mousemove", (e) => {
-  const rect = noBtn.getBoundingClientRect();
-  const dx = e.clientX - (rect.left + rect.width / 2);
-  const dy = e.clientY - (rect.top + rect.height / 2);
-  const distance = Math.hypot(dx, dy);
+// no button evasion (stays on screen)
+document.addEventListener("mousemove", e => {
+  const r = noBtn.getBoundingClientRect();
+  const dx = e.clientX - (r.left + r.width / 2);
+  const dy = e.clientY - (r.top + r.height / 2);
+  const dist = Math.hypot(dx, dy);
 
-  if (distance < 120) {
-    let newX = rect.left - dx * 0.6;
-    let newY = rect.top - dy * 0.6;
+  if (dist < 120) {
+    let x = r.left - dx * 0.6;
+    let y = r.top - dy * 0.6;
 
-    newX = Math.max(10, Math.min(window.innerWidth - rect.width - 10, newX));
-    newY = Math.max(10, Math.min(window.innerHeight - rect.height - 10, newY));
+    x = Math.max(10, Math.min(window.innerWidth - r.width - 10, x));
+    y = Math.max(10, Math.min(window.innerHeight - r.height - 10, y));
 
-    noBtn.style.left = newX + "px";
-    noBtn.style.top = newY + "px";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
   }
 });
 
-// 💖 YES CLICK
 function yesClicked() {
   document.body.innerHTML = `
     <div style="
@@ -138,20 +137,10 @@ function yesClicked() {
       justify-content:center;
       background:linear-gradient(135deg,#f7e6d7,#fbd3dc);
       font-family:Georgia;
-      text-align:center;
-      color:#7a4a5c;">
-      <h1>You make my world softer 🌷</h1>
-
-      <!-- GOOD WILL HUNTING -->
-      <img src="https://media.tenor.com/Q7JkM2yC2lAAAAAC/good-will-hunting-robin-williams.gif" width="260"><br>
-
-      <!-- ETERNAL SUNSHINE -->
-      <img src="https://media.tenor.com/FxT2O9B4b9UAAAAC/eternal-sunshine-of-the-spotless-mind.gif" width="260"><br>
-
-      <!-- BETTER CALL SAUL -->
-      <img src="https://media.tenor.com/0W7R9n1kF1sAAAAC/better-call-saul-kim-wexler.gif" width="260">
-
-      <p style="font-size:18px;">Happy Valentine’s 💗</p>
+      color:#7a4a5c;
+      text-align:center;">
+      <img src="yay.gif" width="300" style="border-radius:18px;"><br>
+      <h1>waikiki, here we come 🌺</h1>
     </div>
   `;
 }
