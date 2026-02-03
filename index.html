@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You 🌸</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #f7e6d7, #fbd3dc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Georgia", serif;
+  overflow: hidden;
+}
+
+.card {
+  background: #fffaf6;
+  padding: 35px 45px;
+  border-radius: 28px;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+  max-width: 380px;
+  position: relative;
+}
+
+h1 {
+  color: #c06c84;
+  font-weight: normal;
+}
+
+p {
+  color: #7a4a5c;
+}
+
+img {
+  width: 240px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+}
+
+button {
+  font-size: 17px;
+  padding: 10px 26px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+#yes {
+  background-color: #e5989b;
+  color: white;
+}
+
+#no {
+  background-color: #f1c0c0;
+  color: #6d3c47;
+  position: fixed;
+}
+
+#musicOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255,250,246,0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  font-size: 20px;
+  color: #c06c84;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎵 MUSIC OVERLAY -->
+<div id="musicOverlay">Tap to start music 🎶</div>
+
+<audio id="music" loop>
+  <source src="https://dl.dropboxusercontent.com/scl/fi/9tr9tf5ey8g0z4kpzzp4v/Dandelions.mp3?rlkey=xyz&raw=1" type="audio/mpeg">
+</audio>
+
+<div class="card">
+  <!-- ZOOTOPIA (TENOR) -->
+  <img src="https://media.tenor.com/uQK6wJgRzKkAAAAC/zootopia-nick-wilde.gif">
+
+  <h1>Will you be my Valentine? 🌸</h1>
+  <p>(asking very softly)</p>
+
+  <button id="yes" onclick="yesClicked()">Yes 🤍</button>
+</div>
+
+<button id="no">No</button>
+
+<script>
+const noBtn = document.getElementById("no");
+const music = document.getElementById("music");
+const overlay = document.getElementById("musicOverlay");
+
+// 🎵 music start
+overlay.onclick = () => {
+  music.play();
+  overlay.style.display = "none";
+};
+
+// 🐭 evade mouse but stay on screen
+document.addEventListener("mousemove", (e) => {
+  const rect = noBtn.getBoundingClientRect();
+  const dx = e.clientX - (rect.left + rect.width / 2);
+  const dy = e.clientY - (rect.top + rect.height / 2);
+  const distance = Math.hypot(dx, dy);
+
+  if (distance < 120) {
+    let newX = rect.left - dx * 0.6;
+    let newY = rect.top - dy * 0.6;
+
+    newX = Math.max(10, Math.min(window.innerWidth - rect.width - 10, newX));
+    newY = Math.max(10, Math.min(window.innerHeight - rect.height - 10, newY));
+
+    noBtn.style.left = newX + "px";
+    noBtn.style.top = newY + "px";
+  }
+});
+
+// 💖 YES CLICK
+function yesClicked() {
+  document.body.innerHTML = `
+    <div style="
+      height:100vh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(135deg,#f7e6d7,#fbd3dc);
+      font-family:Georgia;
+      text-align:center;
+      color:#7a4a5c;">
+      <h1>You make my world softer 🌷</h1>
+
+      <!-- GOOD WILL HUNTING -->
+      <img src="https://media.tenor.com/Q7JkM2yC2lAAAAAC/good-will-hunting-robin-williams.gif" width="260"><br>
+
+      <!-- ETERNAL SUNSHINE -->
+      <img src="https://media.tenor.com/FxT2O9B4b9UAAAAC/eternal-sunshine-of-the-spotless-mind.gif" width="260"><br>
+
+      <!-- BETTER CALL SAUL -->
+      <img src="https://media.tenor.com/0W7R9n1kF1sAAAAC/better-call-saul-kim-wexler.gif" width="260">
+
+      <p style="font-size:18px;">Happy Valentine’s 💗</p>
+    </div>
+  `;
+}
+</script>
+
+</body>
+</html>
