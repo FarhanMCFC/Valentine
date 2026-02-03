@@ -75,14 +75,11 @@ button {
   border-radius: 30px;
   border: none;
   cursor: pointer;
-  position: absolute;
 }
 
 #yes {
   background-color: #e5989b;
   color: white;
-  left: 50%;
-  transform: translateX(-80px);
   animation: glow 2.5s infinite;
 }
 
@@ -94,8 +91,7 @@ button {
 #no {
   background-color: #f1c0c0;
   color: #6d3c47;
-  left: 50%;
-  transform: translateX(20px);
+  position: fixed;
 }
 
 /* ===== MUSIC OVERLAY ===== */
@@ -127,13 +123,13 @@ button {
 
 <body>
 
-<!-- MUSIC -->
+<!-- 🎵 MUSIC -->
 <div id="musicOverlay">tap to start music 🎶</div>
 <audio id="music" loop>
   <source src="dandelions.mp3" type="audio/mpeg">
 </audio>
 
-<!-- CARD -->
+<!-- 🌸 CARD -->
 <div class="card" id="card">
   <img src="proposal.gif" alt="proposal">
   <h1>will you be my valentine, srishti?</h1>
@@ -141,17 +137,28 @@ button {
 
   <div class="buttons">
     <button id="yes">Yes 🤍</button>
-    <button id="no">No</button>
   </div>
 </div>
 
+<button id="no">No</button>
+
 <script>
-/* ===== MUSIC ===== */
+/* ===== MUSIC START ===== */
 const music = document.getElementById("music");
 const overlay = document.getElementById("musicOverlay");
 overlay.onclick = () => {
   music.play();
   overlay.style.display = "none";
+};
+
+/* ===== PLACE NO BUTTON NEXT TO YES ===== */
+window.onload = () => {
+  const yesBtn = document.getElementById("yes");
+  const noBtn = document.getElementById("no");
+  const r = yesBtn.getBoundingClientRect();
+
+  noBtn.style.left = r.right + 20 + "px";
+  noBtn.style.top = r.top + "px";
 };
 
 /* ===== NO BUTTON EVADE ===== */
@@ -183,7 +190,7 @@ document.getElementById("yes").onclick = () => {
   `;
 };
 
-/* ===== FALLING PETALS SPAWN ===== */
+/* ===== FALLING PETALS ===== */
 setInterval(() => {
   const petal = document.createElement("div");
   petal.className = "petal";
