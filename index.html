@@ -5,6 +5,7 @@
 <title>For Srishti 🌸</title>
 
 <style>
+/* ===== GLOBAL ===== */
 body {
   margin: 0;
   height: 100vh;
@@ -14,8 +15,27 @@ body {
   justify-content: center;
   font-family: "Georgia", serif;
   overflow: hidden;
+  cursor: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'>\
+<text y='24' font-size='24'>🐾</text></svg>") 16 16, auto;
 }
 
+/* ===== FALLING PETALS ===== */
+.petal {
+  position: fixed;
+  top: -40px;
+  font-size: 22px;
+  animation: fall linear infinite;
+  pointer-events: none;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(360deg);
+  }
+}
+
+/* ===== CARD ===== */
 .card {
   background: #fffaf6;
   padding: 35px 45px;
@@ -23,6 +43,8 @@ body {
   text-align: center;
   box-shadow: 0 15px 40px rgba(0,0,0,0.15);
   max-width: 380px;
+  position: relative;
+  z-index: 2;
 }
 
 h1 {
@@ -41,27 +63,42 @@ img {
   margin-bottom: 18px;
 }
 
+/* ===== BUTTONS ===== */
+.buttons {
+  position: relative;
+  height: 70px;
+}
+
 button {
   font-size: 17px;
   padding: 10px 26px;
   border-radius: 30px;
   border: none;
   cursor: pointer;
+  position: absolute;
 }
 
 #yes {
   background-color: #e5989b;
   color: white;
+  left: 50%;
+  transform: translateX(-80px);
+  animation: glow 2.5s infinite;
+}
+
+@keyframes glow {
+  0%,100% { box-shadow: 0 0 8px rgba(229,152,155,0.6); }
+  50% { box-shadow: 0 0 18px rgba(229,152,155,0.9); }
 }
 
 #no {
   background-color: #f1c0c0;
   color: #6d3c47;
-  position: fixed;
-  left: 20px;
-  top: 20px;
+  left: 50%;
+  transform: translateX(20px);
 }
 
+/* ===== MUSIC OVERLAY ===== */
 #musicOverlay {
   position: fixed;
   inset: 0;
@@ -74,50 +111,60 @@ button {
   color: #c06c84;
   cursor: pointer;
 }
+
+/* ===== HEART PULSE ===== */
+.heart {
+  font-size: 42px;
+  animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.25); }
+}
 </style>
 </head>
 
 <body>
 
-<!-- 🎵 TAP TO START MUSIC -->
+<!-- MUSIC -->
 <div id="musicOverlay">tap to start music 🎶</div>
-
 <audio id="music" loop>
   <source src="dandelions.mp3" type="audio/mpeg">
 </audio>
 
+<!-- CARD -->
 <div class="card" id="card">
   <img src="proposal.gif" alt="proposal">
-
   <h1>will you be my valentine, srishti?</h1>
   <p>(asking very softly)</p>
 
-  <button id="yes" onclick="yesClicked()">Yes 🤍</button>
+  <div class="buttons">
+    <button id="yes">Yes 🤍</button>
+    <button id="no">No</button>
+  </div>
 </div>
 
-<button id="no">No</button>
-
 <script>
-const noBtn = document.getElementById("no");
+/* ===== MUSIC ===== */
 const music = document.getElementById("music");
 const overlay = document.getElementById("musicOverlay");
-
-// start music after user interaction
 overlay.onclick = () => {
   music.play();
   overlay.style.display = "none";
 };
 
-// no button evasion (stays on screen)
+/* ===== NO BUTTON EVADE ===== */
+const noBtn = document.getElementById("no");
 document.addEventListener("mousemove", e => {
   const r = noBtn.getBoundingClientRect();
   const dx = e.clientX - (r.left + r.width / 2);
   const dy = e.clientY - (r.top + r.height / 2);
   const dist = Math.hypot(dx, dy);
 
-  if (dist < 120) {
-    let x = r.left - dx * 0.6;
-    let y = r.top - dy * 0.6;
+  if (dist < 100) {
+    let x = r.left - dx * 0.5;
+    let y = r.top - dy * 0.5;
 
     x = Math.max(10, Math.min(window.innerWidth - r.width - 10, x));
     y = Math.max(10, Math.min(window.innerHeight - r.height - 10, y));
@@ -127,23 +174,25 @@ document.addEventListener("mousemove", e => {
   }
 });
 
-function yesClicked() {
-  document.body.innerHTML = `
-    <div style="
-      height:100vh;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      background:linear-gradient(135deg,#f7e6d7,#fbd3dc);
-      font-family:Georgia;
-      color:#7a4a5c;
-      text-align:center;">
-      <img src="yay.gif" width="300" style="border-radius:18px;"><br>
-      <h1>waikiki, here we come 🌺</h1>
-    </div>
+/* ===== YES CLICK ===== */
+document.getElementById("yes").onclick = () => {
+  document.getElementById("card").innerHTML = `
+    <img src="yay.gif" width="300" style="border-radius:18px;"><br>
+    <h1>waikiki, here we come 🌺</h1>
+    <div class="heart">💗</div>
   `;
-}
+};
+
+/* ===== FALLING PETALS SPAWN ===== */
+setInterval(() => {
+  const petal = document.createElement("div");
+  petal.className = "petal";
+  petal.textContent = "🌸";
+  petal.style.left = Math.random() * window.innerWidth + "px";
+  petal.style.animationDuration = (5 + Math.random() * 5) + "s";
+  document.body.appendChild(petal);
+  setTimeout(() => petal.remove(), 10000);
+}, 400);
 </script>
 
 </body>
