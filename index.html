@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>For You 🌸</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #f7e6d7, #fbd3dc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Georgia", serif;
+      overflow: hidden;
+    }
+
+    .card {
+      background: #fffaf6;
+      padding: 35px 45px;
+      border-radius: 28px;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+      max-width: 360px;
+      position: relative;
+    }
+
+    h1 {
+      color: #c06c84;
+      font-weight: normal;
+      margin-bottom: 15px;
+    }
+
+    p {
+      color: #7a4a5c;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    img {
+      width: 240px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      font-size: 17px;
+      padding: 10px 26px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    #yes {
+      background-color: #e5989b;
+      color: white;
+      margin-right: 10px;
+    }
+
+    #no {
+      background-color: #f1c0c0;
+      color: #6d3c47;
+      position: absolute;
+    }
+
+    .flowers {
+      position: absolute;
+      top: -25px;
+      right: -25px;
+      font-size: 40px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 🎶 Dandelions autoplay (hidden YouTube embed) -->
+  <iframe width="0" height="0"
+    src="https://www.youtube.com/embed/W8a4sUabCUo?autoplay=1&mute=1&loop=1&playlist=W8a4sUabCUo"
+    frameborder="0"
+    allow="autoplay">
+  </iframe>
+
+  <div class="card">
+    <div class="flowers">🌸🌼</div>
+
+    <!-- Zootopia / Cat-ish cute vibe -->
+    <img src="https://media.giphy.com/media/l2Sqc3POpzkj5r8SQ/giphy.gif">
+
+    <h1>Will you be my Valentine? 💐</h1>
+    <p>(asking very softly, very seriously)</p>
+
+    <button id="yes" onclick="yesClicked()">Yes 🤍</button>
+    <button id="no">No</button>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("no");
+
+    noBtn.addEventListener("mouseover", () => {
+      const x = Math.random() * (window.innerWidth - 120);
+      const y = Math.random() * (window.innerHeight - 60);
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    });
+
+    function yesClicked() {
+      document.body.innerHTML = `
+        <div style="
+          height:100vh;
+          display:flex;
+          flex-direction:column;
+          align-items:center;
+          justify-content:center;
+          background:linear-gradient(135deg,#f7e6d7,#fbd3dc);
+          font-family:Georgia;
+          text-align:center;
+          color:#7a4a5c;
+        ">
+          <h1>You make my world softer 🌷</h1>
+          <p>And I’d choose you in every universe.</p>
+
+          <!-- Eternal Sunshine -->
+          <img src="https://media.giphy.com/media/xUOrw4tlQfCTGmD5Xy/giphy.gif" width="260"><br><br>
+
+          <!-- Good Will Hunting -->
+          <img src="https://media.giphy.com/media/l0MYKDrJvZyZpQy2A/giphy.gif" width="260"><br><br>
+
+          <!-- Better Call Saul (soft moment) -->
+          <img src="https://media.giphy.com/media/l0MYNn0W9OZtBfF1S/giphy.gif" width="260"><br><br>
+
+          <p style="font-size:18px;">Happy Valentine’s 💗</p>
+        </div>
+      `;
+    }
+  </script>
+
+</body>
+</html>
